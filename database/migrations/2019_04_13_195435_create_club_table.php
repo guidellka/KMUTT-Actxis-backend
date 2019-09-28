@@ -15,7 +15,7 @@ class CreateClubTable extends Migration
     {
         DB::beginTransaction();
 
-        Schema::create('club', function (Blueprint $table) {
+        Schema::create('clubs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->datetime('created_at')->useCurrent();
@@ -36,6 +36,6 @@ class CreateClubTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('club');
+        Schema::dropIfExists('clubs');
     }
 }

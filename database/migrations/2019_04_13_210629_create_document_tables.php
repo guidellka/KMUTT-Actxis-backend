@@ -15,7 +15,7 @@ class CreateDocumentTables extends Migration
     {
         DB::beginTransaction();
 
-        Schema::create('step', function (Blueprint $table) {
+        Schema::create('steps', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name',60)->unique();
             $table->datetime('created_at')->useCurrent();
@@ -35,7 +35,7 @@ class CreateDocumentTables extends Migration
                 );
         });
         
-        Schema::create('document', function (Blueprint $table) {
+        Schema::create('documents', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('owner_id');
             $table->unsignedInteger('club_id');
@@ -51,9 +51,9 @@ class CreateDocumentTables extends Migration
                     DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
                 );
             
-            $table->foreign('owner_id')->references('id')->on('user')
+            $table->foreign('owner_id')->references('id')->on('users')
                 ->onUpdate('restrict')->onDelete('cascade');
-            $table->foreign('club_id')->references('id')->on('club')
+            $table->foreign('club_id')->references('id')->on('clubs')
                 ->onUpdate('restrict')->onDelete('cascade');
             $table->foreign('document_category_id')->references('id')->on('document_category')
                 ->onUpdate('restrict')->onDelete('cascade');
@@ -73,13 +73,13 @@ class CreateDocumentTables extends Migration
                     DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
                 );
 
-            $table->foreign('document_id')->references('id')->on('document')
+            $table->foreign('document_id')->references('id')->on('documents')
             ->onUpdate('restrict')->onDelete('cascade');
-            $table->foreign('step_id')->references('id')->on('step')
+            $table->foreign('step_id')->references('id')->on('steps')
             ->onUpdate('restrict')->onDelete('cascade');
             $table->foreign('organize_user_id')->references('id')->on('organization_user')
             ->onUpdate('restrict')->onDelete('cascade');
-            $table->foreign('advisor_id')->references('id')->on('user')
+            $table->foreign('advisor_id')->references('id')->on('users')
             ->onUpdate('restrict')->onDelete('cascade');
         });
 
@@ -93,11 +93,11 @@ class CreateDocumentTables extends Migration
                     DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
                 );
 
-            $table->foreign('document_id')->references('id')->on('document')
+            $table->foreign('document_id')->references('id')->on('documents')
             ->onUpdate('restrict')->onDelete('cascade');
         });
 
-        Schema::create('photo', function (Blueprint $table) {
+        Schema::create('photos', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('document_id');
             $table->string('name',60);
@@ -107,7 +107,7 @@ class CreateDocumentTables extends Migration
                     DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
                 );
 
-            $table->foreign('document_id')->references('id')->on('document')
+            $table->foreign('document_id')->references('id')->on('documents')
             ->onUpdate('restrict')->onDelete('cascade');
         });
 
@@ -115,18 +115,13 @@ class CreateDocumentTables extends Migration
         DB::commit();
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
-        Schema::dropIfExists('step');
+        Schema::dropIfExists('steps');
         Schema::dropIfExists('document_category');
-        Schema::dropIfExists('document');
+        Schema::dropIfExists('documents');
         Schema::dropIfExists('document_step');
         Schema::dropIfExists('document_file');
-        Schema::dropIfExists('photo');
+        Schema::dropIfExists('photos');
     }
 }

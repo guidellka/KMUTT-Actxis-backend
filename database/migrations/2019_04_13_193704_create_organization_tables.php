@@ -15,7 +15,7 @@ class CreateOrganizationTables extends Migration
     {
         DB::beginTransaction();
 
-        Schema::create('organization', function (Blueprint $table) {
+        Schema::create('organizations', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->datetime('created_at')->useCurrent();
@@ -35,23 +35,18 @@ class CreateOrganizationTables extends Migration
                     DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
                 );
             
-            $table->foreign('user_id')->references('id')->on('user')
+            $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('restrict')->onDelete('cascade');
-            $table->foreign('organization_id')->references('id')->on('organization')
+            $table->foreign('organization_id')->references('id')->on('organizations')
                 ->onUpdate('restrict')->onDelete('cascade');
         });
 
         DB::commit();
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
-        Schema::dropIfExists('organization');
+        Schema::dropIfExists('organizations');
         Schema::dropIfExists('organization_user');
     }
 }

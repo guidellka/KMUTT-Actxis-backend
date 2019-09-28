@@ -6,16 +6,11 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateNotificationsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         DB::beginTransaction();
 
-        Schema::create('notification', function (Blueprint $table) {
+        Schema::create('notifications', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('user_id');
             $table->string('title',40);
@@ -28,7 +23,7 @@ class CreateNotificationsTable extends Migration
                     DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
                 );
             
-            $table->foreign('user_id')->references('id')->on('user')
+            $table->foreign('user_id')->references('id')->on('users')
             ->onUpdate('restrict')->onDelete('cascade');
         });
 
@@ -42,6 +37,6 @@ class CreateNotificationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('notification');
+        Schema::dropIfExists('notifications');
     }
 }

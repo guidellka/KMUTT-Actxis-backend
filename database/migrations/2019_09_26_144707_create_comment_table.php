@@ -15,7 +15,7 @@ class CreateCommentTable extends Migration
     {
         DB::beginTransaction();
 
-        Schema::create('comment', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('document_step_id');
             $table->unsignedInteger('reply_id')->nullable();
@@ -29,7 +29,7 @@ class CreateCommentTable extends Migration
 
             $table->foreign('document_step_id')->references('id')->on('document_step')
             ->onUpdate('restrict')->onDelete('cascade');
-            $table->foreign('reply_id')->references('id')->on('comment')
+            $table->foreign('reply_id')->references('id')->on('comments')
             ->onUpdate('restrict')->onDelete('cascade');
         });
 

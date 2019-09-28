@@ -15,12 +15,10 @@ class CreateUserTables extends Migration
     {
         DB::beginTransaction();
 
-        Schema::create('user', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('username', 32)->unique();
             $table->string('password', 255);
-            $table->rememberToken();
-            $table->datetime('deleted_at')->nullable();
             $table->datetime('created_at')->useCurrent();
             $table->datetime('updated_at')
                 ->default(
@@ -45,12 +43,12 @@ class CreateUserTables extends Migration
                     DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
                 );
 
-            $table->foreign('user_id')->references('id')->on('user')
+            $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('restrict')->onDelete('cascade');
         });
 
         // Create table for storing roles
-        Schema::create('role', function (Blueprint $table) {
+        Schema::create('roles', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('name')->unique();
             $table->string('display_name')->nullable();
@@ -67,16 +65,16 @@ class CreateUserTables extends Migration
             $table->unsignedInteger('user_id');
             $table->unsignedInteger('role_id');
 
-            $table->foreign('user_id')->references('id')->on('user')
+            $table->foreign('user_id')->references('id')->on('users')
                 ->onUpdate('restrict')->onDelete('cascade');
-            $table->foreign('role_id')->references('id')->on('role')
+            $table->foreign('role_id')->references('id')->on('roles')
                 ->onUpdate('cascade')->onDelete('cascade');
 
             $table->unique(['user_id', 'role_id']);
         });
 
         // Create table for storing permissions
-        Schema::create('permission', function (Blueprint $table) {
+        Schema::create('permissions', function (Blueprint $table) {
             $table->increments('id')->unsigned();
             $table->string('name')->unique();
             $table->string('display_name')->nullable();
@@ -95,7 +93,7 @@ class CreateUserTables extends Migration
 
             $table->foreign('permission_id')->references('id')->on('permissions')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('role_id')->references('id')->on('role')
+            $table->foreign('role_id')->references('id')->on('roles')
                 ->onUpdate('cascade')->onDelete('cascade');
 
             $table->unique(['permission_id', 'role_id']);
@@ -112,11 +110,11 @@ class CreateUserTables extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('users');
         Schema::dropIfExists('user_data');
-        Schema::dropIfExists('user');
-        Schema::drop('role');
-        Schema::drop('role_user');
-        Schema::drop('permission');
-        Schema::drop('permission_role');
+        Schema::dropIfExists('roles');
+        Schema::dropIfExists('role_user');
+        Schema::dropIfExists('permissions');
+        Schema::dropIfExists('permission_role');
     }
 }

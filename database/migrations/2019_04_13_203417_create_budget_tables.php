@@ -15,7 +15,7 @@ class CreateBudgetTables extends Migration
     {
         DB::beginTransaction();
 
-        Schema::create('budget', function (Blueprint $table) {
+        Schema::create('budgets', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('club_id');
             $table->year('edu_year');
@@ -26,7 +26,7 @@ class CreateBudgetTables extends Migration
                     DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
                 );
 
-            $table->foreign('club_id')->references('id')->on('club')
+            $table->foreign('club_id')->references('id')->on('clubs')
             ->onUpdate('restrict')->onDelete('cascade');
         });
 
@@ -40,6 +40,6 @@ class CreateBudgetTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('budget');
+        Schema::dropIfExists('budgets');
     }
 }
