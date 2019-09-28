@@ -23,7 +23,6 @@ class UserController extends Controller
     {
         $user = new User();
         $user->username = $request['username'];
-        $user->password = $request['password'];
         $user->save();
         return $user;
     }
@@ -43,7 +42,6 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $user->username = $request['username'];
-        $user->password = $request['password'];
         $user->save();
         return $user;
     }
