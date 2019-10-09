@@ -24,7 +24,7 @@ class OrganizationController extends Controller
         $organization = new Organization();
         $organization->name = $request['name'];
         $organization->save();
-        return $organization;
+        return $organization->id;
     }
 
     public function show($id)
@@ -43,13 +43,13 @@ class OrganizationController extends Controller
         $organization = Organization::find($id);
         $organization->name = $request['name'];
         $organization->save();
-        return $organization;
+        return $id;
     }
 
     public function destroy($id)
     {
         $organization = Organization::find($id);
         $organization->delete();
-        return $organization;
+        return $id;
     }
 }

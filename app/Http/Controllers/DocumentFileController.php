@@ -25,7 +25,7 @@ class DocumentFileController extends Controller
         $document_file->document_id = $request['document_id'];
         $document_file->name = $request['name'];
         $document_file->save();
-        return $document_file;
+        return $document_file->id;
     }
 
     public function show($id)
@@ -45,13 +45,13 @@ class DocumentFileController extends Controller
         $document_file->document_id = $request['document_id'];
         $document_file->name = $request['name'];
         $document_file->save();
-        return $document_file;
+        return $id;
     }
 
     public function destroy($id)
     {
         $document_file = DocumentFile::find($id);
         $document_file->delete();
-        return $document_file;
+        return $id;
     }
 }

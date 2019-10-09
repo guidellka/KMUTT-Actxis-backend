@@ -24,7 +24,7 @@ class ClubController extends Controller
         $club = new Club();
         $club->name = $request['name'];
         $club->save();
-        return $club;
+        return $club->id;
     }
 
     public function show($id)
@@ -43,13 +43,13 @@ class ClubController extends Controller
         $club = Club::find($id);
         $club->name = $request['name'];
         $club->save();
-        return $club;
+        return $id;
     }
 
     public function destroy($id)
     {
         $club = Club::find($id);
         $club->delete();
-        return $club;
+        return $id;
     }
 }

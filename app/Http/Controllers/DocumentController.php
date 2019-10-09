@@ -31,7 +31,7 @@ class DocumentController extends Controller
         $document->purpose_budget = $request['purpose_budget'];
         $document->real_budget = $request['real_budget'];
         $document->save();
-        return $document;
+        return $document->id;
     }
 
     public function show($id)
@@ -57,13 +57,13 @@ class DocumentController extends Controller
         $document->purpose_budget = $request['purpose_budget'];
         $document->real_budget = $request['real_budget'];
         $document->save();
-        return $document;
+        return $id;
     }
 
     public function destroy($id)
     {
         $document = Document::find($id);
         $document->delete();
-        return $document;
+        return $id;
     }
 }

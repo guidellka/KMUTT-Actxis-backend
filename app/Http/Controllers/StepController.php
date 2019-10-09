@@ -24,7 +24,7 @@ class StepController extends Controller
         $step = new Step();
         $step->name = $request['name'];
         $step->save();
-        return $step;
+        return $step->id;
     }
 
     public function show($id)
@@ -43,13 +43,13 @@ class StepController extends Controller
         $step = Step::find($id);
         $step->name = $request['name'];
         $step->save();
-        return $step;
+        return $id;
     }
 
     public function destroy($id)
     {
         $step = Step::find($id);
         $step->delete();
-        return $step;
+        return $id;
     }
 }

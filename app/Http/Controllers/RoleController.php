@@ -26,7 +26,7 @@ class RoleController extends Controller
         $role->display_name = $request['display_name'];
         $role->description = $request['description'];
         $role->save();
-        return $role;
+        return $role->id;
     }
 
     public function show($id)
@@ -46,14 +46,12 @@ class RoleController extends Controller
         $role->name = $request['name'];
         $role->display_name = $request['display_name'];
         $role->description = $request['description'];
-        $role->save();
-        return $role;
+        return $id;
     }
 
     public function destroy($id)
     {
         $role = Role::find($id);
-        $role->delete();
-        return $role;
+        return $id;
     }
 }

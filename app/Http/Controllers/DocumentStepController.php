@@ -28,7 +28,7 @@ class DocumentStepController extends Controller
         $document_step->advisor_id = $request['advisor_id'];
         $document_step->is_pass = $request['is_pass'];
         $document_step->save();
-        return $document_step;
+        return $document_step->id;
     }
 
     public function show($id)
@@ -51,13 +51,13 @@ class DocumentStepController extends Controller
         $document_step->advisor_id = $request['advisor_id'];
         $document_step->is_pass = $request['is_pass'];
         $document_step->save();
-        return $document_step;
+        return $id;
     }
 
     public function destroy($id)
     {
         $document_step = DocumentStep::find($id);
         $document_step->delete();
-        return $document_step;
+        return $id;
     }
 }

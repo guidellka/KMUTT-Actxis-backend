@@ -27,7 +27,7 @@ class CommentController extends Controller
         $comment->user_id = $request['user_id'];
         $comment->text = $request['text'];
         $comment->save();
-        return $comment;
+        return $comment->id;
     }
 
     public function show($id)
@@ -49,13 +49,13 @@ class CommentController extends Controller
         $comment->user_id = $request['user_id'];
         $comment->text = $request['text'];
         $comment->save();
-        return $comment;
+        return $id;
     }
 
     public function destroy($id)
     {
         $comment = Comment::find($id);
         $comment->delete();
-        return $comment;
+        return $id;
     }
 }

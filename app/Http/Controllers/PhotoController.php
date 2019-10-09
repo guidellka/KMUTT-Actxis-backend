@@ -25,7 +25,7 @@ class PhotoController extends Controller
         $photo->document_id = $request['document_id'];
         $photo->name = $request['name'];
         $photo->save();
-        return $photo;
+        return $photo->id;
     }
 
     public function show($id)
@@ -45,13 +45,13 @@ class PhotoController extends Controller
         $photo->document_id = $request['document_id'];
         $photo->name = $request['name'];
         $photo->save();
-        return $photo;
+        return $id;
     }
 
     public function destroy($id)
     {
         $step = Photo::find($id);
         $step->delete();
-        return $step;
+        return $id;
     }
 }

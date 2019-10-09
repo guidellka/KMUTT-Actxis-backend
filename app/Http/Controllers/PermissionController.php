@@ -26,7 +26,7 @@ class PermissionController extends Controller
         $permission->display_name = $request['display_name'];
         $permission->description = $request['description'];
         $permission->save();
-        return $permission;
+        return $permission->id;
     }
 
     public function show($id)
@@ -47,13 +47,13 @@ class PermissionController extends Controller
         $permission->display_name = $request['display_name'];
         $permission->description = $request['description'];
         $permission->save();
-        return $permission;
+        return $id;
     }
 
     public function destroy($id)
     {
         $permission = Permission::find($id);
         $permission->delete();
-        return $permission;
+        return $id;
     }
 }

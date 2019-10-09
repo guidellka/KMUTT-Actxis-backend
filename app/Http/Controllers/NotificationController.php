@@ -28,7 +28,7 @@ class NotificationController extends Controller
         $notification->link = $request['link'];
         $notification->is_read = $request['is_read'];
         $notification->save();
-        return $notification;
+        return $notification->id;
     }
 
     public function show($id)
@@ -51,13 +51,13 @@ class NotificationController extends Controller
         $notification->link = $request['link'];
         $notification->is_read = $request['is_read'];
         $notification->save();
-        return $notification;
+        return $id;
     }
 
     public function destroy($id)
     {
         $notification = Notification::find($id);
         $notification->delete();
-        return $notification;
+        return $id;
     }
 }

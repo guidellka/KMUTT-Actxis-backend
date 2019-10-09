@@ -24,7 +24,7 @@ class DocumentCategoryController extends Controller
         $document_category = new DocumentCategory();
         $document_category->name = $request['name'];
         $document_category->save();
-        return $document_category;
+        return $document_category->id;
     }
 
     public function show($id)
@@ -43,13 +43,13 @@ class DocumentCategoryController extends Controller
         $document_category = DocumentCategory::find($id);
         $document_category->name = $request['name'];
         $document_category->save();
-        return $document_category;
+        return $id;
     }
 
     public function destroy($id)
     {
         $document_category = DocumentCategory::find($id);
         $document_category->delete();
-        return $document_category;
+        return $id;
     }
 }

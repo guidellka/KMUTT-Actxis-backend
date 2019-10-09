@@ -25,7 +25,7 @@ class PermissionRoleController extends Controller
         $permission_role->permission_id = $request['permission_id'];
         $permission_role->role_id = $request['role_id'];
         $permission_role->save();
-        return $permission_role;
+        return $permission_role->id;
     }
 
     public function show($id)
@@ -45,13 +45,13 @@ class PermissionRoleController extends Controller
         $permission_role->permission_id = $request['permission_id'];
         $permission_role->role_id = $request['role_id'];
         $permission_role->save();
-        return $permission_role;
+        return $id;
     }
 
     public function destroy($id)
     {
         $permission_role = PermissionRole::find($id);
         $permission_role->delete();
-        return $permission_role;
+        return $id;
     }
 }

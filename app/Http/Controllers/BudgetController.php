@@ -27,7 +27,7 @@ class BudgetController extends Controller
         $budget->edu_year = $request['edu_year'];
         $budget->budget = $request['budget'];
         $budget->save();
-        return $budget;
+        return $budget->id;
     }
 
     public function show($id)
@@ -47,13 +47,13 @@ class BudgetController extends Controller
         $budget->edu_year = $request['edu_year'];
         $budget->budget = $request['budget'];
         $budget->save();
-        return $budget;
+        return $id;
     }
 
     public function destroy($id)
     {
         $budget = Budget::find($id);
         $budget->delete();
-        return $budget;
+        return $id;
     }
 }

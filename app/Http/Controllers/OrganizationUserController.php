@@ -25,7 +25,7 @@ class OrganizationUserController extends Controller
         $organization_user->organization_id = $request['organization_id'];
         $organization_user->user_id = $request['user_id'];
         $organization_user->save();
-        return $organization_user;
+        return $organization_user->id;
     }
 
     public function show($id)
@@ -45,13 +45,13 @@ class OrganizationUserController extends Controller
         $organization_user->organization_id = $request['organization_id'];
         $organization_user->user_id = $request['user_id'];
         $organization_user->save();
-        return $organization_user;
+        return $id;
     }
 
     public function destroy($id)
     {
         $organization_user = OrganizationUser::find($id);
         $organization_user->delete();
-        return $organization_user;
+        return $id;
     }
 }

@@ -25,7 +25,7 @@ class RoleUserController extends Controller
         $role_user->user_id = $request['user_id'];
         $role_user->role_id = $request['role_id'];
         $role_user->save();
-        return $role_user;
+        return $role_user->id;
     }
 
     public function show($id)
@@ -45,13 +45,13 @@ class RoleUserController extends Controller
         $role_user->user_id = $request['user_id'];
         $role_user->role_id = $request['role_id'];
         $role_user->save();
-        return $role_user;
+        return $id;
     }
 
     public function destroy($id)
     {
         $role_user = RoleUser::find($id);
         $role_user->delete();
-        return $role_user;
+        return $id;
     }
 }

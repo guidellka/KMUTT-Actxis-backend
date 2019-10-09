@@ -24,7 +24,7 @@ class UserController extends Controller
         $user = new User();
         $user->username = $request['username'];
         $user->save();
-        return $user;
+        return $user->id;
     }
 
     public function show($id)
@@ -43,13 +43,13 @@ class UserController extends Controller
         $user = User::find($id);
         $user->username = $request['username'];
         $user->save();
-        return $user;
+        return $id;
     }
 
     public function destroy($id)
     {
         $user = User::find($id);
         $user->delete();
-        return $user;
+        return $id;
     }
 }

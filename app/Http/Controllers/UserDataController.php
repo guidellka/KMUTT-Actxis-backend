@@ -34,12 +34,13 @@ class UserDataController extends Controller
         $user_data->email = $request['email'];
         $user_data->tel_no = $request['tel_no'];
         $user_data->save();
-        return $user_data;
+        return $user_data->id;
     }
 
     public function show($id)
     {
         $user_data = UserData::find($id);
+        return $user_data;
     }
 
     public function edit($id)
@@ -61,13 +62,13 @@ class UserDataController extends Controller
         $user_data->email = $request['email'];
         $user_data->tel_no = $request['tel_no'];
         $user_data->save();
-        return $user_data;
+        return $id;
     }
 
     public function destroy($id)
     {
         $user_data = UserData::find($id);
         $user_data->delete();
-        return $user_data;
+        return $id;
     }
 }
