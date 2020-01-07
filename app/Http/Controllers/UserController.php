@@ -52,4 +52,9 @@ class UserController extends Controller
         $user->delete();
         return $id;
     }
+
+    public function getByUsername($username) {
+        $user = User::where('username', $username)->firstOrFail();
+        return $user;
+    }
 }
