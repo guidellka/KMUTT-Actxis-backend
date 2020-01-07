@@ -39,7 +39,7 @@ class UserDataController extends Controller
 
     public function show($id)
     {
-        $user_data = UserData::find($id);
+        $user_data = UserData::where('user_id', $id)->firstOrFail();
         return $user_data;
     }
 
