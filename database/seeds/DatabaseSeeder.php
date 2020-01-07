@@ -14,6 +14,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ClubsTableSeeder::class,
             BudgetsTableSeeder::class,
+            OrganizationsTableSeeder::class,
+            StepsTableSeeder::class,
+            DocumentCategoryTableSeeder::class,
         ]);
     }
 }
