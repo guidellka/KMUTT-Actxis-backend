@@ -26,4 +26,7 @@ Route::resource('role_user','RoleUserController');
 Route::resource('users','UserController');
 Route::resource('user_data','UserDataController');
 
-Route::get('userByUsername/{username}', 'UserController@getByUsername');
+Route::get('user/{username}', 'UserController@getByUsername');
+Route::get('organ_user/{user_id}', 'OrganizationUserController@getWithName');
+
+
