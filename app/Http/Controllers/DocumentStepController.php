@@ -23,10 +23,9 @@ class DocumentStepController extends Controller
     {
         $document_step = new DocumentStep();
         $document_step->document_id = $request['document_id'];
-        $document_step->step_id = $request['step_id'];
-        $document_step->organize_user_id = $request['organize_user_id'];
-        $document_step->advisor_id = $request['advisor_id'];
-        $document_step->is_pass = $request['is_pass'];
+        $document_step->category_step_id = $request['category_step_id'];
+        $document_step->inspector_id = $request['inspector_id'];
+        $document_step->status = $request['status'];
         $document_step->save();
         return $document_step->id;
     }
@@ -46,10 +45,9 @@ class DocumentStepController extends Controller
     {
         $document_step = DocumentStep::find($id);
         $document_step->document_id = $request['document_id'];
-        $document_step->step_id = $request['step_id'];
-        $document_step->organize_user_id = $request['organize_user_id'];
-        $document_step->advisor_id = $request['advisor_id'];
-        $document_step->is_pass = $request['is_pass'];
+        $document_step->category_step_id = $request['category_step_id'];
+        $document_step->inspector_id = $request['inspector_id'];
+        $document_step->status = $request['status'];
         $document_step->save();
         return $id;
     }

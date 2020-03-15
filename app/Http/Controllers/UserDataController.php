@@ -25,21 +25,20 @@ class UserDataController extends Controller
         $user_data = new UserData();
         $user_data->user_id = $request['user_id'];
         $user_data->first_name = $request['first_name'];
-        $user_data->middle_name = $request['middle_name'];
         $user_data->last_name = $request['last_name'];
         $user_data->student_id = $request['student_id'];
         $user_data->department = $request['department'];
-        $user_data->faculty = $request['faculty'];
         $user_data->branch = $request['branch'];
         $user_data->email = $request['email'];
         $user_data->tel_no = $request['tel_no'];
+        $user_data->is_lecturer = $request['is_lecturer'];
         $user_data->save();
-        return $user_data->id;
+        return $user_data->user_id;
     }
 
-    public function show($id)
+    public function show($user_id)
     {
-        $user_data = UserData::where('user_id', $id)->firstOrFail();
+        $user_data = UserData::where('user_id', $user_id)->firstOrFail();
         return $user_data;
     }
 
@@ -53,14 +52,13 @@ class UserDataController extends Controller
         $user_data = UserData::find($id);
         $user_data->user_id = $request['user_id'];
         $user_data->first_name = $request['first_name'];
-        $user_data->middle_name = $request['middle_name'];
         $user_data->last_name = $request['last_name'];
         $user_data->student_id = $request['student_id'];
         $user_data->department = $request['department'];
-        $user_data->faculty = $request['faculty'];
         $user_data->branch = $request['branch'];
         $user_data->email = $request['email'];
         $user_data->tel_no = $request['tel_no'];
+        $user_data->is_lecturer = $request['is_lecturer'];
         $user_data->save();
         return $id;
     }
@@ -70,5 +68,10 @@ class UserDataController extends Controller
         $user_data = UserData::find($id);
         $user_data->delete();
         return $id;
+    }
+
+    public function getLecturer() {
+        $user_data = UserData::where('is_lecturer', true)->get();
+        return $user_data;
     }
 }

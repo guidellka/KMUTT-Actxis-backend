@@ -23,7 +23,7 @@ class PhotoController extends Controller
     {
         $photo = new Photo();
         $photo->document_id = $request['document_id'];
-        $photo->name = $request['name'];
+        $photo->name = $request['file_name'];
         $photo->save();
         return $photo->id;
     }
@@ -43,7 +43,7 @@ class PhotoController extends Controller
     {
         $step = Photo::find($id);
         $photo->document_id = $request['document_id'];
-        $photo->name = $request['name'];
+        $photo->name = $request['file_name'];
         $photo->save();
         return $id;
     }

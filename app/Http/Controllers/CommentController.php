@@ -32,7 +32,7 @@ class CommentController extends Controller
 
     public function show($id)
     {
-        $club = Comment::find($id);
+        $comment = Comment::find($id);
         return $comment;
     }
 
