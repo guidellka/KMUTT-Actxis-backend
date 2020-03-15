@@ -6,15 +6,11 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateUserTables extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         DB::beginTransaction();
-
+        Schema::enableForeignKeyConstraints();
+        
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('username', 60)->unique();
@@ -26,14 +22,15 @@ class CreateUserTables extends Migration
         });
 
         Schema::create('user_data', function (Blueprint $table) {
-            $table->unsignedInteger('user_id');
+            $table->unsignedInteger('user_id')->unique();
             $table->string('first_name', 64);
             $table->string('last_name', 64);
+            $table->string('email', 100)->nullable();
+            $table->boolean('is_lecturer')->default(false);
             $table->string('student_id', 11)->nullable()->unique();
+            $table->string('tel_no', 16)->nullable();
             $table->string('department',80)->nullable(); 
             $table->string('branch', 80)->nullable(); 
-            $table->string('email', 100)->nullable();
-            $table->string('tel_no', 16)->nullable();
             $table->datetime('created_at')->useCurrent();
             $table->datetime('updated_at')
                 ->default(
@@ -47,11 +44,6 @@ class CreateUserTables extends Migration
         DB::commit();
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
     public function down()
     {
         Schema::dropIfExists('users');

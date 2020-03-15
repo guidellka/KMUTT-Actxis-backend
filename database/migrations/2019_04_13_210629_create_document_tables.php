@@ -25,7 +25,7 @@ class CreateDocumentTables extends Migration
                 );
         });
 
-        Schema::create('document_category', function (Blueprint $table) {
+        Schema::create('document_categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->unique();
             $table->datetime('created_at')->useCurrent();
@@ -39,12 +39,15 @@ class CreateDocumentTables extends Migration
             $table->increments('id');
             $table->unsignedInteger('owner_id');
             $table->unsignedInteger('club_id');
-            $table->unsignedInteger('document_category_id');
             $table->unsignedInteger('advisor_id');
+            $table->unsignedInteger('document_category_id');
             $table->string('name',255);
             $table->string('name_en',255)->nullable();
+            $table->string('file_name',255);
+            $table->datetime('start_at');
+            $table->datetime('end_at');    
             $table->double('purpose_budget')->nullable();
-            $table->double('real_budget')->nullable();            
+            $table->double('real_budget')->nullable();     
             $table->datetime('created_at')->useCurrent();
             $table->datetime('updated_at')
                 ->default(
@@ -53,20 +56,37 @@ class CreateDocumentTables extends Migration
             
             $table->foreign('owner_id')->references('id')->on('users')
                 ->onUpdate('restrict')->onDelete('cascade');
+            $table->foreign('advisor_id')->references('id')->on('users')
+            ->onUpdate('restrict')->onDelete('cascade');
             $table->foreign('club_id')->references('id')->on('clubs')
                 ->onUpdate('restrict')->onDelete('cascade');
-            $table->foreign('document_category_id')->references('id')->on('document_category')
+            $table->foreign('document_category_id')->references('id')->on('document_categories')
                 ->onUpdate('restrict')->onDelete('cascade');
         });
 
-        
-        Schema::create('document_step', function (Blueprint $table) {
+        Schema::create('category_steps', function (Blueprint $table) {
+            $table->increments('id');
+            $table->unsignedInteger('category_id');
+            $table->unsignedInteger('step_id');
+            $table->Integer('order');
+            $table->datetime('created_at')->useCurrent();
+            $table->datetime('updated_at')
+            ->default(
+                    DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
+                );
+
+            $table->foreign('category_id')->references('id')->on('document_categories')
+            ->onUpdate('restrict')->onDelete('cascade');
+            $table->foreign('step_id')->references('id')->on('steps')
+            ->onUpdate('restrict')->onDelete('cascade');
+        });
+
+        Schema::create('document_steps', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('document_id');
-            $table->unsignedInteger('step_id');
-            $table->unsignedInteger('organize_user_id')->nullable();
-            $table->unsignedInteger('advisor_id')->nullable();
-            $table->boolean('is_pass');
+            $table->unsignedInteger('category_step_id');
+            $table->unsignedInteger('inspector_id');
+            $table->enum('status', array('รอตรวจสอบ', 'รอแก้ไข', 'เสร็จสิ้น', 'ยกเลิก'));
             $table->datetime('created_at')->useCurrent();
             $table->datetime('updated_at')
                 ->default(
@@ -75,18 +95,16 @@ class CreateDocumentTables extends Migration
 
             $table->foreign('document_id')->references('id')->on('documents')
             ->onUpdate('restrict')->onDelete('cascade');
-            $table->foreign('step_id')->references('id')->on('steps')
+            $table->foreign('category_step_id')->references('id')->on('category_steps')
             ->onUpdate('restrict')->onDelete('cascade');
-            $table->foreign('organize_user_id')->references('id')->on('organization_user')
-            ->onUpdate('restrict')->onDelete('cascade');
-            $table->foreign('advisor_id')->references('id')->on('users')
+            $table->foreign('inspector_id')->references('id')->on('users')
             ->onUpdate('restrict')->onDelete('cascade');
         });
 
-        Schema::create('document_file', function (Blueprint $table) {
+        Schema::create('attach_files', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('document_id');
-            $table->string('name',60);
+            $table->string('file_name',255);
             $table->datetime('created_at')->useCurrent();
             $table->datetime('updated_at')
                 ->default(
@@ -100,7 +118,7 @@ class CreateDocumentTables extends Migration
         Schema::create('photos', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('document_id');
-            $table->string('name',60);
+            $table->string('file_name',255);
             $table->datetime('created_at')->useCurrent();
             $table->datetime('updated_at')
                 ->default(
@@ -117,11 +135,12 @@ class CreateDocumentTables extends Migration
 
     public function down()
     {
+        Schema::dropIfExists('document_steps');
+        Schema::dropIfExists('document_categories');
         Schema::dropIfExists('steps');
-        Schema::dropIfExists('document_category');
-        Schema::dropIfExists('documents');
-        Schema::dropIfExists('document_step');
-        Schema::dropIfExists('document_file');
+        Schema::dropIfExists('category_steps');
+        Schema::dropIfExists('attach_files');
         Schema::dropIfExists('photos');
+        Schema::dropIfExists('documents');
     }
 }

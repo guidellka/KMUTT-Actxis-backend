@@ -27,7 +27,7 @@ class CreateCommentTable extends Migration
                     DB::raw('CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP')
                 );
 
-            $table->foreign('document_step_id')->references('id')->on('document_step')
+            $table->foreign('document_step_id')->references('id')->on('document_steps')
             ->onUpdate('restrict')->onDelete('cascade');
             $table->foreign('reply_id')->references('id')->on('comments')
             ->onUpdate('restrict')->onDelete('cascade');
@@ -43,6 +43,7 @@ class CreateCommentTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('comment');
+        Schema::disableForeignKeyConstraints();
+        Schema::dropIfExists('comments');
     }
 }

@@ -25,7 +25,7 @@ class CreateOrganizationTables extends Migration
                 );
         });
 
-        Schema::create('organization_user', function (Blueprint $table) {
+        Schema::create('organization_users', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('organization_id');
             $table->unsignedInteger('user_id');
@@ -47,6 +47,6 @@ class CreateOrganizationTables extends Migration
     public function down()
     {
         Schema::dropIfExists('organizations');
-        Schema::dropIfExists('organization_user');
+        Schema::dropIfExists('organization_users');
     }
 }
