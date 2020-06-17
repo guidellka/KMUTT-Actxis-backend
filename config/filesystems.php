@@ -54,16 +54,32 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
+        
 
-        's3' => [
+        'minio' => [
             'driver' => 's3',
-            'key' => env('AWS_ACCESS_KEY_ID'),
-            'secret' => env('AWS_SECRET_ACCESS_KEY'),
-            'region' => env('AWS_DEFAULT_REGION'),
-            'bucket' => env('AWS_BUCKET'),
-            'url' => env('AWS_URL'),
+            // 'endpoint' => env('MINIO_ENDPOINT'),
+            'endpoint' => "http://minio-kmuttactxis.phornlert.me:9000",
+            'use_path_style_endpoint' => true,
+            'key' => "AKIAIOSFODNN7EXAMPLE" ,
+            'secret' => "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY",
+            'region' => "us-east-1",
+            'bucket' => "documents",
         ],
 
+
+        // 'minio' => [
+        //     'driver' => 's3',
+        //     // 'endpoint' => env('MINIO_ENDPOINT'),
+        //     'endpoint' => env('http://minio-kmuttactxis.phornlert.me:9000'),
+        //     'use_path_style_endpoint' => true,
+        //     'key' => env('MINIO_KEY'),
+        //     'secret' => env('MINIO_SECRET'),
+        //     'region' => env('MINIO_REGION'),
+        //     'bucket' => env('MINIO_BUCKET'),
+        // ],
+        
     ],
+
 
 ];

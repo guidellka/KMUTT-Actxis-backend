@@ -4,12 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\DocumentFile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentFileController extends Controller
 {
     public function index()
     {
         $document_file = DocumentFile::all();
+        // $url = Storage::disk('minio')->temporaryUrl(
+        //     '1/attach/IMG_3416.JPG', now()->addMinutes(5)
+        // );
+
+        Storage::disk('minio')->put('1/attach/file.jpg', "asdads");
         $data['document_file'] = $document_file;
         return $data;
     }
