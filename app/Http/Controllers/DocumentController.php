@@ -26,6 +26,9 @@ class DocumentController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request->all());
+        $filename = $request->file->getClientOriginalName();
+
         $document = new Document();
         $document->owner_id = $request['owner_id'];
         $document->club_id = $request['club_id'];
@@ -37,13 +40,26 @@ class DocumentController extends Controller
         $document->end_at = $request['end_at'];
         $document->purpose_budget = $request['purpose_budget'];
         $document->real_budget = $request['real_budget'];
-        $document->file_name = $request['file_name'];
+        $document->file_name = $filename;
         $document->save();
-        
-        // $file = $request->file($request['file_name']);
-        // Storage::disk('minio')->put('1/attach/file.jpg', );
+
+        $file = $request->file('file');
+        Storage::disk('minio')->put("test/".$document->id.".".explode(".", $filename)[1], file_get_contents($file));
+
 
         return $document->id;
+    }
+
+    public function uploadFile(Request $request)
+    {
+        $filename = $request->file('file')->getClientOriginalName();
+        $newfilename = Carbon::now().$filename;
+        $file = $request->file('file');
+        // dd($file);
+        Storage::disk('minio')->put("test/".$newfilename , file_get_contents($file));
+        $temp = Storage::disk('minio')->url("test/".$newfilename);
+
+        return $temp;
     }
 
     public function show($id)

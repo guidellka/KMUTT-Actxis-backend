@@ -27,4 +27,7 @@ Route::get('organ_user/{user_id}', 'OrganizationUserController@getWithName');
 Route::get('documentByOwnerId/{owner_id}', 'DocumentController@getDocumentListsByOwnerId');
 Route::get('/getLecturer', 'UserDataController@getLecturer');
 
+Route::post('file','DocumentController@uploadFile');
+
+
 
